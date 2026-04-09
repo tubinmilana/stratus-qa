@@ -1,0 +1,40 @@
+@startuml
+
+[*] --> Cart
+
+Cart --> StockCheck : Open cart
+StockCheck --> OutOfStock : Not available
+StockCheck --> Checkout : In stock
+
+OutOfStock --> [*]
+
+Checkout --> AuthCheck
+
+AuthCheck --> Login : Not logged in
+AuthCheck --> Shipping : Logged in
+
+Login --> Shipping : Success
+
+Shipping --> AddressValidation
+AddressValidation --> Shipping : Invalid address
+AddressValidation --> Payment : Valid address
+
+Payment --> Card : Select card
+Payment --> Cash : Select cash
+Payment --> Wallet : Select wallet
+
+Card --> PaymentRetry : Payment failed
+PaymentRetry --> Payment : Retry / change method
+Card --> OrderCreated : Payment success
+
+Wallet --> PaymentRetry : Payment failed
+Wallet --> OrderCreated : Payment success
+
+Cash --> OrderCreated
+
+OrderCreated --> Confirmation
+Confirmation --> Success
+
+Success --> [*]
+
+@enduml
