@@ -1,0 +1,7 @@
+flowchart LR
+    A[User] --> B[Frontend]
+    B --> C[API Gateway]
+    C --> D[Backend Service]
+    D --> E[Database]
+
+    C --> F[External API]
