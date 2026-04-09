@@ -1,37 +1,40 @@
-stateDiagram-v2
-    [*] --> Cart
+@startuml
 
-    Cart --> StockCheck : Open cart
-    StockCheck --> OutOfStock : Not available
-    StockCheck --> Checkout : In stock
+[*] --> Cart
 
-    OutOfStock --> [*]
+Cart --> StockCheck : Open cart
+StockCheck --> OutOfStock : Not available
+StockCheck --> Checkout : In stock
 
-    Checkout --> AuthCheck
+OutOfStock --> [*]
 
-    AuthCheck --> Login : Not logged in
-    AuthCheck --> Shipping : Logged in
+Checkout --> AuthCheck
 
-    Login --> Shipping : Success
+AuthCheck --> Login : Not logged in
+AuthCheck --> Shipping : Logged in
 
-    Shipping --> AddressValidation
-    AddressValidation --> Shipping : Invalid address
-    AddressValidation --> Payment : Valid address
+Login --> Shipping : Success
 
-    Payment --> Card : Select card
-    Payment --> Cash : Select cash
-    Payment --> Wallet : Select wallet
+Shipping --> AddressValidation
+AddressValidation --> Shipping : Invalid address
+AddressValidation --> Payment : Valid address
 
-    Card --> PaymentRetry : Payment failed
-    PaymentRetry --> Payment : Retry / change
-    Card --> OrderCreated : Payment success
+Payment --> Card : Select card
+Payment --> Cash : Select cash
+Payment --> Wallet : Select wallet
 
-    Wallet --> PaymentRetry : Payment failed
-    Wallet --> OrderCreated : Payment success
+Card --> PaymentRetry : Payment failed
+PaymentRetry --> Payment : Retry / change method
+Card --> OrderCreated : Payment success
 
-    Cash --> OrderCreated
+Wallet --> PaymentRetry : Payment failed
+Wallet --> OrderCreated : Payment success
 
-    OrderCreated --> Confirmation
-    Confirmation --> Success
+Cash --> OrderCreated
 
-    Success --> [*]
+OrderCreated --> Confirmation
+Confirmation --> Success
+
+Success --> [*]
+
+@enduml
